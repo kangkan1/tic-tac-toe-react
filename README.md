@@ -1,4 +1,4 @@
-![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg](https://github.com/kangkan1/tic-tac-toe-react/blob/master/public/photo.png))
+![alt text]([http://url/to/img.png](https://github.com/kangkan1/tic-tac-toe-react/blob/master/public/photo.png))
 
 # Getting Started with Create React App
 
