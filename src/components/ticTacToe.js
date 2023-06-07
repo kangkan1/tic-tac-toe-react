@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Footer from "./footer";
+import Header from "./header";
+import RefreshIcon from "./refresh_icon";
+import '../App.css';
 function click(val){
     console.log(val)
 
@@ -71,28 +74,33 @@ export default function TicTatcToe(){
         //console.log(board);
     }
     return (
-            <div className="center">
-                <p>Player: {chance}'s turn</p>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td onClick={(e)=>setMove(0, 0, e)}>{board[0][0]}</td>
-                            <td onClick={(e)=>setMove(0, 1, e)}>{board[0][1]}</td>
-                            <td onClick={(e)=>setMove(0, 2, e)}>{board[0][2]}</td>
-                        </tr>
-                        <tr>
-                            <td onClick={(e)=>setMove(1,0, e)}>{board[1][0]}</td>
-                            <td onClick={(e)=>setMove(1,1, e)}>{board[1][1]}</td>
-                            <td onClick={(e)=>setMove(1,2, e)}>{board[1][2]}</td>
-                        </tr>
-                        <tr>
-                            <td onClick={(e)=>setMove(2,0, e)}>{board[2][0]}</td>
-                            <td onClick={(e)=>setMove(2,1, e)}>{board[2][1]}</td>
-                            <td onClick={(e)=>setMove(2,2, e)}>{board[2][2]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button onClick={refresh}>Refresh</button>
+            <div >
+                <Header />
+                <div className="center">
+                    <p>Player: {chance}'s turn</p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td onClick={(e)=>setMove(0, 0, e)}>{board[0][0]}</td>
+                                <td onClick={(e)=>setMove(0, 1, e)}>{board[0][1]}</td>
+                                <td onClick={(e)=>setMove(0, 2, e)}>{board[0][2]}</td>
+                            </tr>
+                            <tr>
+                                <td onClick={(e)=>setMove(1,0, e)}>{board[1][0]}</td>
+                                <td onClick={(e)=>setMove(1,1, e)}>{board[1][1]}</td>
+                                <td onClick={(e)=>setMove(1,2, e)}>{board[1][2]}</td>
+                            </tr>
+                            <tr>
+                                <td onClick={(e)=>setMove(2,0, e)}>{board[2][0]}</td>
+                                <td onClick={(e)=>setMove(2,1, e)}>{board[2][1]}</td>
+                                <td onClick={(e)=>setMove(2,2, e)}>{board[2][2]}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button onClick={refresh}>
+                        <RefreshIcon width={"18"}  height={"18"}/>
+                    </button>
+                </div>
                 <Footer />
             </div>
       );
