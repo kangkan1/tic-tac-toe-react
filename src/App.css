@@ -3,8 +3,32 @@
   margin:auto;
 }
 td{
-  height:3rem;
-  width:3rem;
   border:1px solid;
+  height:3rem;
+  width: 3rem;
   text-align: center;
+  font-size: 2rem;
+  background-color: rgb(19, 219, 219);
+}
+td:hover{
+  background-color:whitesmoke
+}
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(39, 33, 33);
+  color: white;
+  text-align: center;
+  height:3rem;
+  padding: 1rem;
+}
+button{
+  padding: 0.5rem;
+  background-color: rgb(19, 219, 219);
+  border-radius: 0.5rem;
+}
+button:hover{
+  background-color: rgb(221, 233, 219);
 }
