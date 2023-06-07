@@ -1,9 +1,8 @@
 export default function Header(){
     return (
         <header>
-            <div>
-               vdsf
-            </div>
+
+               <h4>Tic Tac Toe Game</h4>
         </header>
     );
 }
