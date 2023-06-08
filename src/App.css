@@ -5,7 +5,6 @@
   transform: translate(-50%, -50%);
 }
 td{
-  border:1px solid;
   height:4rem;
   width: 4rem;
   text-align: center;
@@ -55,4 +54,20 @@ h4{
 }
 h4:hover{
   color:bisque
+}
+.border-left{
+  border-left: 2px solid;
+  border-color: black;
+}
+.border-right{
+  border-right: 2px solid;
+  border-color: black;
+}
+.border-top{
+  border-top: 2px solid;
+  border-color: black;
+}
+.border-buttom{
+  border-bottom: 2px solid;
+  border-color: black;
 }
