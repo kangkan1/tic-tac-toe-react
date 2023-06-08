@@ -13,7 +13,6 @@ export default function TicTatcToe(){
             if(board[i][0] === 'X' || board[i][0] === 'O'){
                 if(board[i][0] === board[i][1] &&  board[i][1]=== board[i][2]){
                     alert('Player:'+board[i][0]+" is the winner")
-                    
                     refresh()
                 }
             }
@@ -39,7 +38,6 @@ export default function TicTatcToe(){
     }
     function setMove(i, j, e){
         
-        console.log(e.target.innerText)
         let temp = [...board];
         if(e.target.innerText.length === 0){
             if(chance === 'X'){
@@ -70,6 +68,10 @@ export default function TicTatcToe(){
         setChance('X');
         //console.log(board);
     }
+
+    function flipCard(e){
+        e.classList.toggle('flipCard')
+    }
     return (
             <div >
                 <Header />
@@ -98,6 +100,18 @@ export default function TicTatcToe(){
                         <RefreshIcon width={"18"}  height={"18"}/>
                     </button>
                 </div>
+                <div className="maincontainer">
+                    <div className="card" onClick={(e)=>flipCard(e)}>
+                        <div className="front">
+                            <h3>My Font Text</h3>
+                        </div>
+                        <div className="back">
+                            <h3>My Back Text</h3>
+                        </div>
+
+                    </div>
+                </div>
+
                 <Footer />
             </div>
       );

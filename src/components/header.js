@@ -1,8 +1,10 @@
 export default function Header(){
     return (
         <header>
-
-               <h4>Tic Tac Toe Game</h4>
+            <ul>
+                <li><a class="active" href="#home">Tic Tac Toe Game</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
         </header>
     );
 }
