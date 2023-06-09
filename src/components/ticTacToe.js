@@ -5,51 +5,113 @@ import RefreshIcon from "./refresh_icon";
 import '../App.css';
 
 export default function TicTatcToe(){
-    const [chance, setChance] = useState('X')
-    const [board, setBoard] = useState([['','',''], ['','',''], ['','','']])
+    const [chance, setChance] = useState('X');
+    const [playWithComp, setPlayWithComp] = useState(false);
+    const [board, setBoard] = useState([['','',''], ['','',''], ['','','']]);
 
-    function checkWinner(){
+    function checkWinner(board_temp){
         for(let i=0;i<3;i++){
-            if(board[i][0] === 'X' || board[i][0] === 'O'){
-                if(board[i][0] === board[i][1] &&  board[i][1]=== board[i][2]){
-                    alert('Player:'+board[i][0]+" is the winner")
-                    refresh()
+            if(board_temp[i][0] === 'X' || board_temp[i][0] === 'O'){
+                if(board_temp[i][0] === board_temp[i][1] &&  board_temp[i][1]=== board_temp[i][2]){
+                    return board_temp[i][0]
+                    
                 }
             }
-            if(board[0][i] === 'X' || board[0][i] === 'O'){
-                if(board[0][i] === board[1][i] &&  board[1][i]=== board[2][i]){
-                    alert('Player:'+board[0][i]+" is the winner")
-                    refresh()
+            if(board_temp[0][i] === 'X' || board_temp[0][i] === 'O'){
+                if(board_temp[0][i] === board_temp[1][i] &&  board_temp[1][i]=== board_temp[2][i]){
+                    return board_temp[0][i];
+                    
                 }
             } 
         }
-        if(board[0][0] === 'X' || board[0][0] === 'O'){
-            if(board[0][0] === board[1][1] &&  board[1][1]=== board[2][2]){
-                alert('Player:'+board[0][0]+" is the winner")
-                refresh()
+        if(board_temp[0][0] === 'X' || board_temp[0][0] === 'O'){
+            if(board_temp[0][0] === board_temp[1][1] &&  board_temp[1][1]=== board_temp[2][2]){
+                return board_temp[0][0];
             }
         }
-        if(board[2][0] === 'X' || board[2][0] === 'O'){
-            if(board[2][0] === board[1][1] &&  board[1][1]=== board[0][2]){
-                alert('Player:'+board[2][0]+" is the winner")
-                refresh()
+        if(board_temp[2][0] === 'X' || board_temp[2][0] === 'O'){
+            if(board_temp[2][0] === board_temp[1][1] &&  board_temp[1][1] === board_temp[0][2]){
+                return board_temp[2][0];
+                
             }
         }
+        
+        return null;
+    }
+
+    function minimax(board_temp, depth, isMaximising){
+        let result = checkWinner(board_temp);
+        if(result === 'O'){
+            return 1;
+        }else if(result === 'X'){
+            return -1;
+        }else{
+            return 0;
+        }
+        if(isMaximising){
+            let bestScore = -Infinity;
+            for(let i=0;i<3;i++){
+                for(let j=0;j<3;j++){
+                    if(board_temp[i][j] === ''){
+                        let score = minimax
+                    }
+                }
+            }
+        }else{
+
+        }
+        return 1;
     }
     function setMove(i, j, e){
         
         let temp = [...board];
+        console.log(board)
         if(e.target.innerText.length === 0){
             if(chance === 'X'){
                 temp[i][j] = 'X';
                 setBoard(temp);
-                setChance('O');
-            }else if(chance === 'O'){
+                if(!playWithComp){
+                    setChance('O');
+                }
+            
+                if(playWithComp && chance==='X'){
+                    let bestScore = -Infinity;
+                    let bestMove;
+                    for(let i=0;i<3;i++){
+                        for(let j=0;j<3;j++){
+                            if(temp[i][j] === ''){
+                                temp[i][j] = 'O';
+                                let score = minimax(temp, 0, true)
+                                temp[i][j] = '';
+                                if(score > bestScore){
+                                    bestScore = score;
+                                    bestMove = [i, j] ;  
+                                }
+                            }
+                        }
+                    }
+                    if(bestMove){
+                        temp[bestMove[0]][bestMove[1]] = 'O';
+                        setBoard(temp);
+                        setChance('X');
+                    }
+                    
+
+                }
+            }else if(!playWithComp && chance === 'O'){
                 temp[i][j] = 'O';
                 setBoard(temp);
                 setChance('X');
             }
-            checkWinner()
+            let winner = checkWinner(temp);
+            if(winner === 'X'){
+                alert('Player:'+winner+" is the winner")
+                refresh()
+            }else if(winner === 'O'){
+                alert('Player:'+winner+" is the winner")
+                refresh()
+            }
+            
         }else{
             alert('Invalid move')
         }
@@ -68,14 +130,20 @@ export default function TicTatcToe(){
         setChance('X');
         //console.log(board);
     }
-
-    function flipCard(e){
-        e.classList.toggle('flipCard')
-    }
     return (
             <div >
                 <Header />
                 <div className="center">
+                    <div class='row'>
+                        <span>
+                            Play with Computer?
+                        </span>
+                        <label class="switch">
+                            <input type="checkbox" onChange={()=>{setPlayWithComp(!playWithComp)}}/>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
                     <p>Player: {chance}'s turn</p>
                     <table>
                         <tbody>
@@ -100,18 +168,6 @@ export default function TicTatcToe(){
                         <RefreshIcon width={"18"}  height={"18"}/>
                     </button>
                 </div>
-                <div className="maincontainer">
-                    <div className="card" onClick={(e)=>flipCard(e)}>
-                        <div className="front">
-                            <h3>My Font Text</h3>
-                        </div>
-                        <div className="back">
-                            <h3>My Back Text</h3>
-                        </div>
-
-                    </div>
-                </div>
-
                 <Footer />
             </div>
       );
