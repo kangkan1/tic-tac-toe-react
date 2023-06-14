@@ -39,28 +39,92 @@ export default function TicTatcToe(){
         return null;
     }
 
-    function minimax(board_temp, depth, isMaximising){
-        let result = checkWinner(board_temp);
-        if(result === 'O'){
-            return 1;
-        }else if(result === 'X'){
-            return -1;
-        }else{
-            return 0;
+    function isMovesLeft(board_temp){
+        for(let i = 0; i < 3; i++)
+            for(let j = 0; j < 3; j++)
+                if (board_temp[i][j] === '')
+                    return true;         
+        return false;
+    }
+
+    function evaluate(b){
+      
+    // Checking for Rows for X or O victory.
+        for(let row = 0; row < 3; row++)
+        {
+            if (b[row][0] === b[row][1] &&
+                b[row][1] === b[row][2])
+            {
+                if (b[row][0] === 'O')
+                    return +10;
+                    
+                else if (b[row][0] === 'X')
+                    return -10;
+            }
         }
-        if(isMaximising){
-            let bestScore = -Infinity;
-            for(let i=0;i<3;i++){
-                for(let j=0;j<3;j++){
-                    if(board_temp[i][j] === ''){
-                        let score = minimax
+        for(let col = 0; col < 3; col++)
+        {
+            if (b[0][col] === b[1][col] &&
+                b[1][col] === b[2][col])
+            {
+                if (b[0][col] === 'O')
+                    return +10;
+    
+                else if (b[0][col] === 'X')
+                    return -10;
+            }
+        }
+        if (b[0][0] === b[1][1] && b[1][1] === b[2][2]){
+            if (b[0][0] === 'O')
+                return +10;  
+            else if (b[0][0] === 'X')
+                return -10;
+        }
+        if (b[0][2] === b[1][1] && b[1][1] === b[2][0]){
+            if (b[0][2] === 'O')
+                return +10;         
+            else if (b[0][2] === 'X')
+                return -10;
+        }
+        return 0;
+    }
+
+    function minimax(board_temp, depth, isMax){
+        let score = evaluate(board_temp);
+        if (score === 10)
+            return score;
+        if (score === -10)
+            return score;
+        if (isMovesLeft(board_temp) === false)
+            return 0;
+        if (isMax){
+            let best = -1000;
+            for(let i = 0; i < 3; i++){
+                for(let j = 0; j < 3; j++){
+                    if (board_temp[i][j]===''){
+                        board_temp[i][j] = 'O';
+                        best = Math.max(best, minimax(board_temp,
+                                        depth + 1, !isMax));     
+                        board_temp[i][j] = '';
                     }
                 }
             }
-        }else{
-
+            return best;
         }
-        return 1;
+        else{
+            let best = 1000;
+            for(let i = 0; i < 3; i++){
+                for(let j = 0; j < 3; j++){
+                    if (board_temp[i][j] === ''){
+                        board_temp[i][j] = 'X';
+                        best = Math.min(best, minimax(board_temp,
+                                        depth + 1, !isMax));
+                        board_temp[i][j] = '';
+                    }
+                }
+            }
+        return best;
+        }
     }
     function setMove(i, j, e){
         
@@ -75,17 +139,17 @@ export default function TicTatcToe(){
                 }
             
                 if(playWithComp && chance==='X'){
-                    let bestScore = -Infinity;
+                    let bestScore = -1000;
                     let bestMove;
-                    for(let i=0;i<3;i++){
-                        for(let j=0;j<3;j++){
-                            if(temp[i][j] === ''){
-                                temp[i][j] = 'O';
-                                let score = minimax(temp, 0, true)
-                                temp[i][j] = '';
+                    for(let k=0;k<3;k++){
+                        for(let l=0;l<3;l++){
+                            if(temp[k][l] === ''){
+                                temp[k][l] = 'O';
+                                let score = minimax(temp, 0, false);
+                                temp[k][l] = '';
                                 if(score > bestScore){
                                     bestScore = score;
-                                    bestMove = [i, j] ;  
+                                    bestMove = [k, l] ;  
                                 }
                             }
                         }
@@ -115,6 +179,9 @@ export default function TicTatcToe(){
         }else{
             alert('Invalid move')
         }
+        if(!isMovesLeft(board)){
+            alert("It's a tie")
+        }
         //console.log(board)
     }
     function refresh(){
@@ -134,12 +201,12 @@ export default function TicTatcToe(){
             <div >
                 <Header />
                 <div className="center">
-                    <div class='row'>
+                    <div className='row'>
                         <span>
                             Play with Computer?
                         </span>
                         <label class="switch">
-                            <input type="checkbox" onChange={()=>{setPlayWithComp(!playWithComp)}}/>
+                            <input type="checkbox" onChange={()=>{setPlayWithComp(!playWithComp); refresh();}}/>
                             <span class="slider round"></span>
                         </label>
                     </div>

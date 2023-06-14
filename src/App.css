@@ -15,7 +15,7 @@ td{
   color:rgb(250, 221, 6)
 }
 td:hover{
-  background-color:whitesmoke
+  background-color:rgb(111, 87, 246);
 }
 footer {
   position: fixed;
