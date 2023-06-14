@@ -13,25 +13,25 @@ export default function TicTatcToe(){
         for(let i=0;i<3;i++){
             if(board_temp[i][0] === 'X' || board_temp[i][0] === 'O'){
                 if(board_temp[i][0] === board_temp[i][1] &&  board_temp[i][1]=== board_temp[i][2]){
-                    return board_temp[i][0]
+                    return [board_temp[i][0], [i,0,i,1,i,2]];
                     
                 }
             }
             if(board_temp[0][i] === 'X' || board_temp[0][i] === 'O'){
                 if(board_temp[0][i] === board_temp[1][i] &&  board_temp[1][i]=== board_temp[2][i]){
-                    return board_temp[0][i];
+                    return [board_temp[0][i], [0,i,1,i,2,i]];
                     
                 }
             } 
         }
         if(board_temp[0][0] === 'X' || board_temp[0][0] === 'O'){
             if(board_temp[0][0] === board_temp[1][1] &&  board_temp[1][1]=== board_temp[2][2]){
-                return board_temp[0][0];
+                return [board_temp[0][0], [0,0,1,1,2,2]];
             }
         }
         if(board_temp[2][0] === 'X' || board_temp[2][0] === 'O'){
             if(board_temp[2][0] === board_temp[1][1] &&  board_temp[1][1] === board_temp[0][2]){
-                return board_temp[2][0];
+                return [board_temp[2][0], [2,0,1,1,0,2]];
                 
             }
         }
@@ -131,6 +131,13 @@ export default function TicTatcToe(){
         let temp = [...board];
         console.log(board)
         if(e.target.innerText.length === 0){
+            let winner;
+            winner = checkWinner(temp);
+            if(winner !== null){
+                alert('Player: '+winner[0]+" has won!")
+                return;
+            }
+
             if(chance === 'X'){
                 temp[i][j] = 'X';
                 setBoard(temp);
@@ -167,14 +174,32 @@ export default function TicTatcToe(){
                 setBoard(temp);
                 setChance('X');
             }
-            let winner = checkWinner(temp);
-            if(winner === 'X'){
-                alert('Player:'+winner+" is the winner")
-                refresh()
-            }else if(winner === 'O'){
-                alert('Player:'+winner+" is the winner")
-                refresh()
-            }
+            
+            setTimeout(function(){
+                winner = checkWinner(temp);
+                if(winner!==null && winner[0] === 'X'){
+                    for(let k=0;k<6;k=k+2){
+                        let ele = document.getElementById(winner[1][k]+''+winner[1][k+1]);
+                        if(ele){
+                            ele.classList.add('green');
+                        }
+                    }
+                    alert('Player: '+winner[0]+" is the winner")
+                    
+                    //refresh()
+                }else if(winner!==null && winner[0] === 'O'){
+                    for(let k=0;k<6;k=k+2){
+                        let ele = document.getElementById(winner[1][k]+''+winner[1][k+1]);
+                        if(ele){
+                            ele.classList.add('green');
+                        }
+                    }
+                    alert('Player: '+winner[0]+" is the winner")
+                    //refresh()
+                }
+            }, 500);
+            
+            
             
         }else{
             alert('Invalid move')
@@ -191,6 +216,11 @@ export default function TicTatcToe(){
             for(let j=0;j<3;j++){
                 temp[i][j] = '';
             }
+        }
+        let ele = document.getElementsByTagName('td')
+        
+        for(let k=0;k<ele.length;k++){
+            ele[k].classList.remove('green')
         }
         //console.log(temp)
         setBoard(temp);
@@ -215,19 +245,19 @@ export default function TicTatcToe(){
                     <table>
                         <tbody>
                             <tr>
-                                <td onClick={(e)=>setMove(0, 0, e)} className="border-right border-buttom" style={{color:(board[0][0]==='X'?'yellow':'red')}}>{board[0][0]}</td>
-                                <td onClick={(e)=>setMove(0, 1, e)} className="border-right border-left border-buttom" style={{color:(board[0][1]==='X'?'yellow':'red')}}>{board[0][1]}</td>
-                                <td onClick={(e)=>setMove(0, 2, e)} className="border-left border-buttom" style={{color:(board[0][2]==='X'?'yellow':'red')}}>{board[0][2]}</td>
+                                <td id = "00" onClick={(e)=>setMove(0, 0, e)} className="border-right border-buttom bd-top-left-radius" style={{color:(board[0][0]==='X'?'yellow':'red')}}>{board[0][0]}</td>
+                                <td id = "01" onClick={(e)=>setMove(0, 1, e)} className="border-right border-left border-buttom" style={{color:(board[0][1]==='X'?'yellow':'red')}}>{board[0][1]}</td>
+                                <td id = "02" onClick={(e)=>setMove(0, 2, e)} className="border-left border-buttom bd-top-right-radius" style={{color:(board[0][2]==='X'?'yellow':'red')}}>{board[0][2]}</td>
                             </tr>
                             <tr>
-                                <td onClick={(e)=>setMove(1,0, e)} className="border-right border-buttom border-top" style={{color:(board[1][0]==='X'?'yellow':'red')}}>{board[1][0]}</td>
-                                <td onClick={(e)=>setMove(1,1, e)} className="border-right border-left border-buttom border-top" style={{color:(board[1][1]==='X'?'yellow':'red')}}>{board[1][1]}</td>
-                                <td onClick={(e)=>setMove(1,2, e)} className="border-left border-buttom border-top" style={{color:(board[1][2]==='X'?'yellow':'red')}}>{board[1][2]}</td>
+                                <td id = "10" onClick={(e)=>setMove(1,0, e)} className="border-right border-buttom border-top" style={{color:(board[1][0]==='X'?'yellow':'red')}}>{board[1][0]}</td>
+                                <td id = "11" onClick={(e)=>setMove(1,1, e)} className="border-right border-left border-buttom border-top" style={{color:(board[1][1]==='X'?'yellow':'red')}}>{board[1][1]}</td>
+                                <td id = "12" onClick={(e)=>setMove(1,2, e)} className="border-left border-buttom border-top" style={{color:(board[1][2]==='X'?'yellow':'red')}}>{board[1][2]}</td>
                             </tr>
                             <tr>
-                                <td onClick={(e)=>setMove(2,0, e)} className="border-right border-top" style={{color:(board[2][0]==='X'?'yellow':'red')}}>{board[2][0]}</td>
-                                <td onClick={(e)=>setMove(2,1, e)} className="border-right border-left border-top" style={{color:(board[2][1]==='X'?'yellow':'red')}}>{board[2][1]}</td>
-                                <td onClick={(e)=>setMove(2,2, e)} className="border-left border-top" style={{color:(board[2][2]==='X'?'yellow':'red')}}>{board[2][2]}</td>
+                                <td id = "20" onClick={(e)=>setMove(2,0, e)} className="border-right border-top bd-buttom-left-radius" style={{color:(board[2][0]==='X'?'yellow':'red')}}>{board[2][0]}</td>
+                                <td id = "21" onClick={(e)=>setMove(2,1, e)} className="border-right border-left border-top" style={{color:(board[2][1]==='X'?'yellow':'red')}}>{board[2][1]}</td>
+                                <td id = "22" onClick={(e)=>setMove(2,2, e)} className="border-left border-top bd-buttom-right-radius" style={{color:(board[2][2]==='X'?'yellow':'red')}}>{board[2][2]}</td>
                             </tr>
                         </tbody>
                     </table>

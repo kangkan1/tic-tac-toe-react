@@ -13,3 +13,5 @@ function App() {
 
 export default App;
 //npm start
+// deploy command
+//npm run deploy

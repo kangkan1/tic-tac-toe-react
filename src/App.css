@@ -12,10 +12,13 @@ td{
   font-style: oblique;
   font-weight: bold;
   background-color: rgb(38, 0, 250);
-  color:rgb(250, 221, 6)
+  
 }
 td:hover{
   background-color:rgb(111, 87, 246);
+}
+.green {
+  background-color: rgb(14, 232, 10);
 }
 footer {
   position: fixed;
@@ -70,6 +73,18 @@ h4:hover{
 .border-buttom{
   border-bottom: 2px solid;
   border-color: black;
+}
+.bd-top-right-radius{
+  border-top-right-radius: 20%;
+}
+.bd-top-left-radius{
+  border-top-left-radius: 20%;
+}
+.bd-buttom-left-radius{
+  border-bottom-left-radius: 20%;
+}
+.bd-buttom-right-radius{
+  border-bottom-right-radius: 20%;
 }
 
 ul {
